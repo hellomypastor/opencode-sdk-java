@@ -64,12 +64,12 @@ public class SessionResource extends ApiResource {
     /**
      * Send a message to a session.
      */
-    public AssistantMessage chat(String id, SessionChatParams params) {
+    public SessionMessagesResponse chat(String id, SessionChatParams params) {
         return chat(id, params, null);
     }
 
-    public AssistantMessage chat(String id, SessionChatParams params, RequestOptions options) {
-        return client.post("/session/" + id + "/message", params, AssistantMessage.class, options);
+    public SessionMessagesResponse chat(String id, SessionChatParams params, RequestOptions options) {
+        return client.post("/session/" + id + "/message", params, SessionMessagesResponse.class, options);
     }
 
     /**
