@@ -2,7 +2,7 @@ package com.opencode.sdk.models.session;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class StepStartPart {
+public class StepStartPart extends MessagePart {
 
     @JsonProperty("id")
     private String id;

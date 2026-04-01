@@ -6,13 +6,13 @@ import java.util.List;
 public class SessionMessagesResponse {
 
     @JsonProperty("info")
-    private Object info;
+    private Message info;
 
     @JsonProperty("parts")
-    private List<Object> parts;
+    private List<MessagePart> parts;
 
-    public Object getInfo() { return info; }
-    public void setInfo(Object info) { this.info = info; }
-    public List<Object> getParts() { return parts; }
-    public void setParts(List<Object> parts) { this.parts = parts; }
+    public Message getInfo() { return info; }
+    public void setInfo(Message info) { this.info = info; }
+    public List<MessagePart> getParts() { return parts; }
+    public void setParts(List<MessagePart> parts) { this.parts = parts; }
 }

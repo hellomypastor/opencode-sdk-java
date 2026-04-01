@@ -15,7 +15,7 @@ Add the dependency to your `pom.xml`:
 <dependency>
     <groupId>com.opencode</groupId>
     <artifactId>opencode-sdk-java</artifactId>
-    <version>0.1.0-alpha.1</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 
@@ -23,7 +23,6 @@ Add the dependency to your `pom.xml`:
 
 ```java
 import com.opencode.sdk.Opencode;
-import com.opencode.sdk.models.app.App;
 import com.opencode.sdk.models.session.*;
 
 import java.util.List;
@@ -31,23 +30,55 @@ import java.util.List;
 // Create client (defaults to http://localhost:54321 or OPENCODE_BASE_URL env var)
 Opencode client = new Opencode();
 
-// Get app info
-App app = client.app().get();
-System.out.println("CWD: " + app.getPath().getCwd());
-
 // Create a session
 Session session = client.session().create();
 
 // Send a chat message
 SessionChatParams params = SessionChatParams.builder()
-    .modelID("anthropic/claude-sonnet-4-20250514")
-    .providerID("anthropic")
+    .providerID("openai")
+    .modelID("gpt-5.3-chat-latest")
     .parts(List.of(new TextPartInput("Hello, how are you?")))
     .build();
 client.session().chat(session.getId(), params);
 
-// List all sessions
-List<Session> sessions = client.session().list();
+// Read assistant messages
+List<SessionMessagesResponse> messages = client.session().messages(session.getId());
+for (SessionMessagesResponse message : messages) {
+    if (!(message.getInfo() instanceof AssistantMessage)) {
+        continue;
+    }
+    for (MessagePart part : message.getParts()) {
+        if (part instanceof TextPart) {
+            System.out.println(((TextPart) part).getText());
+        }
+    }
+}
+```
+
+### Typed Message Responses
+
+`client.session().messages(id)` returns `List<SessionMessagesResponse>`.
+
+- `SessionMessagesResponse.info` is a typed `Message`
+- `SessionMessagesResponse.parts` is a typed `List<MessagePart>`
+
+You can safely branch on the concrete subclasses:
+
+```java
+SessionMessagesResponse response = client.session().messages(session.getId()).get(0);
+
+if (response.getInfo() instanceof AssistantMessage) {
+    AssistantMessage info = (AssistantMessage) response.getInfo();
+    System.out.println(info.getModelID());
+}
+
+for (MessagePart part : response.getParts()) {
+    if (part instanceof TextPart) {
+        System.out.println(((TextPart) part).getText());
+    } else if (part instanceof StepFinishPart) {
+        System.out.println(((StepFinishPart) part).getType());
+    }
+}
 ```
 
 ### Custom Configuration

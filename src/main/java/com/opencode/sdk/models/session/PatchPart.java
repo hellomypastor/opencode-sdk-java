@@ -3,7 +3,7 @@ package com.opencode.sdk.models.session;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
-public class PatchPart {
+public class PatchPart extends MessagePart {
 
     @JsonProperty("id")
     private String id;

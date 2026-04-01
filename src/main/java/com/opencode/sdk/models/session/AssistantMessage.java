@@ -3,10 +3,7 @@ package com.opencode.sdk.models.session;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
-public class AssistantMessage {
-
-    @JsonProperty("id")
-    private String id;
+public class AssistantMessage extends Message {
 
     @JsonProperty("cost")
     private double cost;
@@ -23,12 +20,6 @@ public class AssistantMessage {
     @JsonProperty("providerID")
     private String providerID;
 
-    @JsonProperty("role")
-    private String role = "assistant";
-
-    @JsonProperty("sessionID")
-    private String sessionID;
-
     @JsonProperty("system")
     private List<String> system;
 
@@ -44,8 +35,6 @@ public class AssistantMessage {
     @JsonProperty("summary")
     private Boolean summary;
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
     public double getCost() { return cost; }
     public void setCost(double cost) { this.cost = cost; }
     public String getMode() { return mode; }
@@ -56,10 +45,6 @@ public class AssistantMessage {
     public void setPath(Path path) { this.path = path; }
     public String getProviderID() { return providerID; }
     public void setProviderID(String providerID) { this.providerID = providerID; }
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
-    public String getSessionID() { return sessionID; }
-    public void setSessionID(String sessionID) { this.sessionID = sessionID; }
     public List<String> getSystem() { return system; }
     public void setSystem(List<String> system) { this.system = system; }
     public Time getTime() { return time; }
