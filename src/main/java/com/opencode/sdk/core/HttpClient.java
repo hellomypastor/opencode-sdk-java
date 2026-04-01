@@ -161,13 +161,13 @@ public class HttpClient {
                 requestBuilder.get();
                 break;
             case "POST":
-                requestBuilder.post(requestBody != null ? requestBody : RequestBody.create("", MediaType.parse("application/json")));
+                requestBuilder.post(requestBody != null ? requestBody : emptyJsonBody());
                 break;
             case "PATCH":
-                requestBuilder.patch(requestBody != null ? requestBody : RequestBody.create("", MediaType.parse("application/json")));
+                requestBuilder.patch(requestBody != null ? requestBody : emptyJsonBody());
                 break;
             case "PUT":
-                requestBuilder.put(requestBody != null ? requestBody : RequestBody.create("", MediaType.parse("application/json")));
+                requestBuilder.put(requestBody != null ? requestBody : emptyJsonBody());
                 break;
             case "DELETE":
                 requestBuilder.delete(requestBody);
@@ -178,6 +178,10 @@ public class HttpClient {
 
         applyHeaders(requestBuilder, reqOptions);
         return httpClient.newCall(requestBuilder.build()).execute();
+    }
+
+    private RequestBody emptyJsonBody() {
+        return RequestBody.create("{}", MediaType.parse("application/json"));
     }
 
     private void applyHeaders(Request.Builder requestBuilder, RequestOptions reqOptions) {
