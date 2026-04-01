@@ -1,6 +1,7 @@
 package com.opencode.sdk.core;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencode.sdk.errors.*;
@@ -26,6 +27,7 @@ public class HttpClient {
     public HttpClient(ClientOptions options) {
         this.options = options;
         this.objectMapper = new ObjectMapper()
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.httpClient = new OkHttpClient.Builder()
                 .connectTimeout(options.getTimeout(), TimeUnit.MILLISECONDS)
