@@ -91,7 +91,7 @@ public class SessionResource extends ApiResource {
     }
 
     public List<SessionMessagesResponse> messages(String id, RequestOptions options) {
-        return client.get("/session/" + id + "/messages", new TypeReference<List<SessionMessagesResponse>>() {}, options);
+        return client.get("/session/" + id + "/message", new TypeReference<List<SessionMessagesResponse>>() {}, options);
     }
 
     /**
